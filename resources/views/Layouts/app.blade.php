@@ -19,6 +19,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
     @toastr_css 
 
     <style type="text/css">
@@ -103,7 +104,7 @@
             @yield('content')
         </main>
 
-        <footer class="footer fixed-bottom">
+        <footer class="footer fixed-bottom" style="margin-top: 20px">
             <div>
                 <p class="p-footer" style="margin-bottom:0px ">Copyright &copy; 2016-2018 @ Cybertech Int (pvt) Ltd. Powered by <a class="p-footer-a" href="http://www.cybertechint.lk" target="_blank">Cybertech Int</a> team.</p>
             </div>
@@ -111,7 +112,39 @@
     </div>
     
 </body>
+
 @jquery
+<script src="{{ asset('js/jquery.dataTables.min.js')}}"></script>
 @toastr_js
 @toastr_render
+    <script >
+      $('#mydata').dataTable({
+        "paging": true, // Allow data to be paged
+        "lengthChange": false,
+        "searching": true, // Search box and search function will be actived
+        "ordering": true,
+        "autoWidth": true,
+        "processing": true,  // Show processing 
+        "pageLength": 10         
+      });
+    </script>
+    <script type="text/javascript">
+        $(document).on("change", "#sel1", function() {
+            $id=($(this).find("option:selected").val());
+            $status=($(this).find("option:selected").text());
+            
+
+            $.ajax({
+              type : 'GET',
+              url : '{{ url('/changeStatus')}}',
+              data : {'id':$id, 'status':$status},
+              success : function(data){
+                console.log(data);
+              },error:function(data){ 
+                console.log(data);
+            }
+            });
+        });
+        
+    </script>
 </html>

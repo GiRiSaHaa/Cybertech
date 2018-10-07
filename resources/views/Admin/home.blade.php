@@ -9,13 +9,13 @@
                 Applicants
                 <span class="badge badge-danger badge-pill float-right">14</span>
               </a>
-              <a href="#" class="list-group-item list-group-item-action">Dapibus ac facilisis in</a>
+              <a href="#" class="list-group-item list-group-item-action">Admin Controls</a>
               
             </div>
         </div>
         <div class="col-md-9">
-            <div class="card">
-                <table class="table table-striped">
+            <div class="card" style="padding:15px">
+                <table class="table table-striped" id="mydata">
                     <thead>
                       <tr>
                         <th>#</th>
@@ -29,18 +29,33 @@
                     <tbody>
                       <?php $n=1; ?>
                       @foreach($applicants as $applicant)
-                      @foreach($applicantStatus as $status)
+                        
                       <tr>
                         <td>{{ $n++ }}</td>
-                        <td>{{$applicant['fullName']}}</td>
-                        <td>{{$applicant['position']}}</td>
-                        <td>{{$applicant['mobile']}}</td>
-                        <td>{{ ($status->applicantID==$applicant['id'])?$status->status:"" }}</td>
+                        <td>{{$applicant->fullName }}</td>
+                        <td>{{$applicant-> position }}</td>
+                        <td>{{$applicant->mobile }}</td>
+                        <td>
+                            <div class="form-group">
+                                <?php if($applicant->status=='Pending'){ ?>
+                              <select class="form-control" id="sel1">
+                                <option value="{{ $applicant->id }}" <?=(($applicant->status=='Selected')?'selected':'')?>>Selected</option>
+                                <option value="{{ $applicant->id }}" <?=(($applicant->status=='Rejected')?'selected':'')?>>Rejected</option>
+                                <option value="{{ $applicant->id }}" <?=(($applicant->status=='Pending')?'selected':'')?>>Pending</option>
+                              </select>
+                                <?php }else{ ?>
+                                    <select class="form-control" id="sel1">
+                                <option value="{{ $applicant->id }}" <?=(($applicant->status=='Selected')?'selected':'')?>>Selected</option>
+                                <option value="{{ $applicant->id }}" <?=(($applicant->status=='Rejected')?'selected':'')?>>Rejected</option>
+                              </select>
+                                <?php } ?>
+                            </div>
+                        </td>
                         <td style="text-align: center;">
-                            <a href="" class="btn btn-warning">View</a>
+                            <a href="view_applicant?id={{$applicant->id}}" class="btn btn-sm btn-warning">View</a>
                         </td>
                       </tr>
-                      @endforeach
+                        
                       @endforeach
                     </tbody>
                   </table>
@@ -48,4 +63,5 @@
         </div>
     </div>
 </div>
+
 @endsection

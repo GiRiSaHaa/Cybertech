@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use DB;
 
 class HomeController extends Controller
 {
@@ -23,8 +24,14 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $applicants=\App\Applicant::all();
-        $applicantStatus=\App\ApplicantStatus::all();
-        return view('Admin.home',compact('applicants','applicantStatus'));
+        // $applicants=\App\Applicant::all();
+        // $applicantStatus=\App\ApplicantStatus::all();
+        $applicants = DB::table('applicants')
+            ->join('applicant_statuses', 'applicants.id', '=', 'applicant_statuses.applicantID')
+            ->select('applicants.*', 'applicant_statuses.status')
+            ->get();
+            
+            
+        return view('Admin.home',compact('applicants'));
     }
 }

@@ -19,3 +19,6 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::post('/saveApplicant', 'ApplicantController@saveApplicant');
+Route::get('/changeStatus', 'ApplicantController@changeStatus');
+Route::get('/view_applicant','ApplicantController@viewApplicant');
+Route::get('/downloadcv','ApplicantController@downloadcv');
